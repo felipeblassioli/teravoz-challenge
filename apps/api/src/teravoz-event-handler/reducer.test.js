@@ -1,6 +1,7 @@
 const test = require('ava');
 const actions = require('./actions');
-const rootReducer = require('./reducer');
+const { reducer: rootReducer, getReturningCustomers } = require('./reducer');
+const { Map } = require('immutable');
 
 /**
  * Given a list of inputActions
@@ -138,3 +139,12 @@ test(
     t.false(returningCustomers.get('11991910044', false));
   }
 );
+
+test('getReturningCustomers from state', t => {
+  const expected = Map({
+    '551199996666': true,
+  });
+
+  const state = Map({ returningCustomers: expected });
+  t.is(getReturningCustomers(state), expected);
+});

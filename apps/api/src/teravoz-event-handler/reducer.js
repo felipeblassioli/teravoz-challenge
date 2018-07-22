@@ -21,6 +21,8 @@ function returningCustomerReducer(previousState, action) {
   }
 }
 
+const getReturningCustomers = state => state.get('returningCustomers');
+
 function ongoingCallsReducer(previousState, action) {
   switch (action.type) {
     case TERAVOZ_CALL_ONGOING:
@@ -41,4 +43,7 @@ function reducer(state = INITIAL_STATE, action) {
   return ongoingCallsReducer(state, action);
 }
 
-module.exports = reducer;
+module.exports = {
+  getReturningCustomers,
+  reducer,
+};
