@@ -6,4 +6,6 @@ module.exports = {
   TERAVOZ_CALL_ONGOING: '@teravoz/call-ongoing',
   TERAVOZ_ACTOR_LEFT: '@teravoz/actor-left',
   TERAVOZ_CALL_FINISHED: '@teravoz/call-finished',
+  CALL_DELEGATION_SUCCESS: 'call-delegation-success',
+  CALL_DELEGATION_ERROR: 'call-delegation-error',
 };
