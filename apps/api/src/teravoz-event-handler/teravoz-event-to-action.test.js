@@ -2,15 +2,15 @@ const test = require('ava');
 const actions = require('./actions');
 const teravozEventToAction = require('./teravoz-event-to-action');
 
-function macro(t, input, expected) {
+function testTeravozEventTranslation(t, input, expected) {
   t.deepEqual(teravozEventToAction(input), expected);
 }
 
-macro.title = (_, input, expected) =>
+testTeravozEventTranslation.title = (_, input, expected) =>
   `Translate teravoz ${input.type} event to ${expected.type} action`;
 
 test(
-  macro,
+  testTeravozEventTranslation,
   {
     type: 'call.new',
     call_id: '1463669263.30033',
@@ -37,7 +37,7 @@ test(
 );
 
 test(
-  macro,
+  testTeravozEventTranslation,
   {
     type: 'call.standby',
     call_id: '1463669263.30033',
@@ -62,7 +62,7 @@ test(
 );
 
 test(
-  macro,
+  testTeravozEventTranslation,
   {
     type: 'call.waiting',
     call_id: '1463669263.30033',
@@ -87,7 +87,7 @@ test(
 );
 
 test(
-  macro,
+  testTeravozEventTranslation,
   {
     type: 'actor.entered',
     call_id: '1463669263.30033',
@@ -110,7 +110,7 @@ test(
 );
 
 test(
-  macro,
+  testTeravozEventTranslation,
   {
     type: 'call.ongoing',
     call_id: '1463669263.30033',
@@ -135,7 +135,7 @@ test(
 );
 
 test(
-  macro,
+  testTeravozEventTranslation,
   {
     type: 'actor.left',
     call_id: '1463669263.30033',
@@ -158,7 +158,7 @@ test(
 );
 
 test(
-  macro,
+  testTeravozEventTranslation,
   {
     type: 'call.finished',
     call_id: '1463669263.30033',
