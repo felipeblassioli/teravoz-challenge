@@ -6,7 +6,7 @@ const {
   TERAVOZ_CALL_FINISHED,
 } = require('./actions');
 
-const INITIAL_STATE = Map({
+const EMPTY_STATE = Map({
   returningCustomers: Map(),
   ongoingCalls: Map(),
 });
@@ -38,12 +38,13 @@ function ongoingCallsReducer(previousState, action) {
   }
 }
 
-function reducer(state = INITIAL_STATE, action) {
+function reducer(state = EMPTY_STATE, action) {
   state = returningCustomerReducer(state, action);
   return ongoingCallsReducer(state, action);
 }
 
 module.exports = {
+  EMPTY_STATE,
   getReturningCustomers,
   reducer,
 };

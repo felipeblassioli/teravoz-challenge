@@ -16,6 +16,7 @@
   "devDependencies": {
     "ava": "1.0.0-beta.6",
     "nyc": "^12.0.2",
+    "redux-logic-test": "^1.0.5",
     "sinon": "^6.1.4"
   }
 }
