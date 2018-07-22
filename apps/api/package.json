@@ -4,7 +4,7 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    "test": "ava",
+    "test": "nyc ava --verbose",
     "start": "node server.js"
   },
   "author": "",
@@ -14,6 +14,8 @@
     "rxjs": "^5.5.11"
   },
   "devDependencies": {
-    "ava": "1.0.0-beta.6"
+    "ava": "1.0.0-beta.6",
+    "nyc": "^12.0.2",
+    "sinon": "^6.1.4"
   }
 }
