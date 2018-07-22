@@ -181,3 +181,17 @@ test(
     },
   }
 );
+
+test('When teravoz event is invalid throw error', t => {
+  const invalidTeravozEvent = {
+    type: 'INVALID_EVENT_TYPE',
+    call_id: '1463669263.30033',
+    code: '123456',
+  };
+  try {
+    teravozEventToAction(invalidTeravozEvent);
+    t.fail('teravozEventToAction must throw an error!');
+  } catch (error) {
+    t.pass();
+  }
+});
