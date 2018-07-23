@@ -1,10 +1,13 @@
 const test = require('ava');
 const Fastify = require('fastify');
 const webhookRoute = require('./webhook');
+const buildServicesDAG = require('../build-services-dag');
 
 async function testWebhookRoute(t, input, assertionsFn) {
   const fastify = Fastify();
-  fastify.register(webhookRoute);
+  const { teravozEventHandlerService } = await buildServicesDAG();
+
+  fastify.register(webhookRoute, { teravozEventHandlerService });
 
   const response = await fastify.inject({
     method: 'POST',

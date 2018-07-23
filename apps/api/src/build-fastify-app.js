@@ -1,16 +1,16 @@
 const Fastify = require('fastify');
+const buildServicesDAG = require('./build-services-dag');
 
-function buildFastifyApp(opts = {}) {
-  const { teravozServiceUrl, savedStatePath } = opts;
+async function buildFastifyApp(opts = {}) {
   const fastify = Fastify({
     logger: true,
     ...opts,
   });
 
-  fastify.register(require('./routes/webhook'), {
-    teravozServiceUrl,
-    savedStatePath,
-  });
+  const { teravozEventHandlerService } = await buildServicesDAG(opts);
+
+  fastify.register(require('./routes/webhook'), { teravozEventHandlerService });
+
   return fastify;
 }
 

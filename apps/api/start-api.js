@@ -8,7 +8,7 @@ const start = async () => {
 
   const teravozServiceUrl = process.env.TERAVOZ_SERVICE_URL;
   const savedStatePath = process.env.SAVED_STATE_FILEPATH;
-  const fastify = buildFastifyApp({
+  const fastify = await buildFastifyApp({
     teravozServiceUrl,
     savedStatePath,
   });
