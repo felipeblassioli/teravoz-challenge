@@ -1,0 +1,15 @@
+version: "3"
+services:
+  api:
+    build: apps/api
+    environment:
+      NODE_ENV: production
+      PORT: 3000
+      SAVED_STATE_FILEPATH: /tmp/saved-state.json
+      TERAVOZ_SERVICE_URL: http://teravoz:3001
+  teravoz:
+    build: apps/teravoz-api-fake
+    environment:
+      NODE_ENV: production
+      PORT: 3001
+      TARGET_WEBHOOK_URL: http://api:3000/webhook
