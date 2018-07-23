@@ -5,7 +5,7 @@
   "main": "server.js",
   "scripts": {
     "test": "nyc ava --verbose",
-    "start": "node server.js"
+    "start": "node run-http-server.js"
   },
   "author": "",
   "license": "ISC",

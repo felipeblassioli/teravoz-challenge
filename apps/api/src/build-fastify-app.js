@@ -1,10 +1,16 @@
 const Fastify = require('fastify');
 
-function buildFastifyApp() {
-  const fastify = Fastify();
+function buildFastifyApp(opts = {}) {
+  const { teravozServiceUrl, savedStatePath } = opts;
+  const fastify = Fastify({
+    logger: true,
+    ...opts,
+  });
 
-  Fastify.register(require('./routes/webhook'));
-
+  fastify.register(require('./routes/webhook'), {
+    teravozServiceUrl,
+    savedStatePath,
+  });
   return fastify;
 }
 
