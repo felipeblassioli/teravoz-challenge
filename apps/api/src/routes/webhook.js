@@ -1,7 +1,18 @@
-const TeravozEventHandler = require('../teravoz-event-handler');
+const TeravozService = require('../services/TeravozService');
+const StateStorageService = require('../services/DiskStorageService');
+const TeravozEventHandler = require('../services/TeravozEventHandlerService');
 
-async function webhookRoute(fastify, options) {
-  const teravozEventHandler = new TeravozEventHandler();
+async function webhookRoute(fastify, options = {}) {
+  const { teravozServiceUrl, savedStatePath } = options;
+  const teravozService =
+    teravozServiceUrl && new TeravozService({ baseUrl: teravozServiceUrl });
+  const stateStorageService =
+    savedStatePath && new StateStorageService({ savedStatePath });
+
+  const teravozEventHandler = new TeravozEventHandler({
+    teravozService,
+    stateStorageService,
+  });
   await teravozEventHandler.init();
 
   const opts = {
