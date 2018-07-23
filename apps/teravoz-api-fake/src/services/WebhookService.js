@@ -1,18 +1,8 @@
 const fetch = require('node-fetch');
-const isUrl = require('is-url');
 
 class WebhookService {
   constructor({ webhookUrl }) {
-    if (!isUrl(webhookUrl)) {
-      throw new TypeError(
-        `InvalidParameter: webhookUrl=${webhookUrl} must be a valid url`
-      );
-    }
-    webhookUrl = webhookUrl.endsWith('/')
-      ? webhookUrl.substring(0, webhookUrl.length - 1)
-      : webhookUrl;
-
-    this.webhookUrl = webhookUrl;
+    this.webhookUrl = new URL(webhookUrl).toString();
   }
 
   async notifyWebhook(body) {

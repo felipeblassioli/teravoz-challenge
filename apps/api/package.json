@@ -13,7 +13,6 @@
     "camelize": "^1.0.0",
     "fastify": "^1.8.0",
     "immutable": "^3.8.2",
-    "is-url": "^1.2.4",
     "node-fetch": "^2.2.0",
     "pino-pretty": "^1.0.1",
     "redux": "^4.0.0",

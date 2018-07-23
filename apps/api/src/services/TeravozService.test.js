@@ -16,7 +16,7 @@ test('baseUrl is a valid url', t => {
 });
 
 test('Throws error when baseUrl argument is a invalid url', t => {
-  const urls = [null, '', undefined, 'https:/www.google.com'];
+  const urls = [null, '', undefined];
 
   t.plan(urls.length);
 
