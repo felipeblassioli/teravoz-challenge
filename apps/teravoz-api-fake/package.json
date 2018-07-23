@@ -1,0 +1,19 @@
+{
+  "name": "@terafoz-challenge/terafoz-api-fake",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node start-teravoz-fake-api.js | pino-pretty -c -t"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "faker": "^4.1.0",
+    "fastify": "^1.8.0",
+    "is-url": "^1.2.4",
+    "node-fetch": "^2.2.0",
+    "pino-pretty": "^1.0.1"
+  }
+}
