@@ -152,4 +152,4 @@ After finishing cleanly `apps/api` I did [XGH](http://sou.gohorseprocess.com.br/
 
 It was a good test and it was enjoyable doing it. 
 
-But I found the specification/requirements too open-ended, for instance I could have done a simpler React dashboard, but that wouldn't be fun (What is the challenge of doing a simple Table/List to display structured data?).
+But I found the specification/requirements too open-ended, for instance I could have done a simpler React dashboard, but that wouldn't be fun.
