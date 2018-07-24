@@ -22,6 +22,10 @@ class CallSimulatorService {
     };
   }
 
+  get status() {
+    return this.simulation.running ? 'RUNNING' : 'STOPPED';
+  }
+
   async dispatch(event) {
     console.log(`Dispatch ${event.type}`);
     console.log(event);
@@ -53,6 +57,8 @@ class CallSimulatorService {
     if (!this.simulation.running) {
       this.simulation.intervalId = setInterval(() => {
         this.simulateFirstHalf();
+        this.simulateFirstHalf();
+        this.simulateFirstHalf();
       }, newCallsDelay);
       this.simulation.running = true;
     }
@@ -82,7 +88,10 @@ class CallSimulatorService {
     await this.dispatch(actorEntered(callContext));
     await sleep(400);
     await this.dispatch(callOngoing(callContext));
-    await sleep(callContext.targetDuration || 5000);
+    await sleep(
+      callContext.targetDuration ||
+        faker.random.number({ min: 5000, max: 25000 })
+    );
     await this.dispatch(actorLeft(callContext));
     await sleep(500);
     await this.dispatch(callFinished(callContext));
