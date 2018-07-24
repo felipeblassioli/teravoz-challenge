@@ -6,4 +6,6 @@ COPY . /code/
 WORKDIR /code
 RUN npm install --only=production
 
+ENV PORT 3001
+EXPOSE 3001
 CMD [ "npm", "run", "start" ]
