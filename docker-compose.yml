@@ -1,15 +1,25 @@
 version: "3"
 services:
+  dashboard:
+    build: apps/dashboard
+    ports:
+      - "5000:5000"
+    environment:
+      NODE_ENV: production
+      HOST: 0.0.0.0
+      PORT: 5000
+      API_SERVICE_URL: http://api:5001
+      TERAVOZ_SERVICE_URL: http://teravoz:5002
   api:
     build: apps/api
     environment:
       NODE_ENV: production
-      PORT: 3000
+      PORT: 5001
       SAVED_STATE_FILEPATH: /tmp/saved-state.json
-      TERAVOZ_SERVICE_URL: http://teravoz:3001
+      TERAVOZ_SERVICE_URL: http://teravoz:5002
   teravoz:
     build: apps/teravoz-api-fake
     environment:
       NODE_ENV: production
-      PORT: 3001
-      TARGET_WEBHOOK_URL: http://api:3000/webhook
+      PORT: 5002
+      TARGET_WEBHOOK_URL: http://api:5001/webhook
