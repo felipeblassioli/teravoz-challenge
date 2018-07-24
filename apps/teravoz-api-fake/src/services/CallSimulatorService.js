@@ -57,8 +57,6 @@ class CallSimulatorService {
     if (!this.simulation.running) {
       this.simulation.intervalId = setInterval(() => {
         this.simulateFirstHalf();
-        this.simulateFirstHalf();
-        this.simulateFirstHalf();
       }, newCallsDelay);
       this.simulation.running = true;
     }
@@ -88,10 +86,11 @@ class CallSimulatorService {
     await this.dispatch(actorEntered(callContext));
     await sleep(400);
     await this.dispatch(callOngoing(callContext));
-    await sleep(
+    let duration =
       callContext.targetDuration ||
-        faker.random.number({ min: 5000, max: 25000 })
-    );
+      parseInt(faker.random.number({ min: 5000, max: 25000 }));
+    duration = Math.min(25000, duration);
+    await sleep(duration);
     await this.dispatch(actorLeft(callContext));
     await sleep(500);
     await this.dispatch(callFinished(callContext));
