@@ -3,7 +3,7 @@ const { createLogicMiddleware } = require('redux-logic');
 const { reducer: rootReducer } = require('./reducer');
 const logic = require('./logic');
 
-module.exports = function(initialState, deps = {}) {
+module.exports = function({ initialState, deps = {} }) {
   if (initialState === null) {
     initialState = undefined;
   }

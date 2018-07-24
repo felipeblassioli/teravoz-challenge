@@ -1,6 +1,8 @@
 const defaultCreateStore = require('./create-store');
 const teravozEventToAction = require('./teravoz-event-to-action');
 
+const { getOngoingCalls } = require('./reducer');
+
 class TeravozEventHandlerService {
   constructor({
     teravozService,
@@ -13,11 +15,14 @@ class TeravozEventHandlerService {
   }
 
   async init() {
+    let deps = {};
+    if (this.teravozService) {
+      deps.teravozService = this.teravozService;
+    }
+
     if (this.stateStorageService) {
       const initialState = await this.stateStorageService.load();
-      this.store = this.createStore(initialState, {
-        teravozService: this.teravozService,
-      });
+      this.store = this.createStore({ initialState, deps });
 
       let previousState;
       this.unsubscribe = this.store.subscribe(() => {
@@ -28,7 +33,7 @@ class TeravozEventHandlerService {
         previousState = currentState;
       });
     } else {
-      this.store = this.createStore();
+      this.store = this.createStore({ deps });
     }
   }
 
@@ -41,6 +46,10 @@ class TeravozEventHandlerService {
     if (this.unsubscribe) {
       this.unsubscribe();
     }
+  }
+
+  getOngoingCalls() {
+    return getOngoingCalls(this.store.getState());
   }
 }
 
