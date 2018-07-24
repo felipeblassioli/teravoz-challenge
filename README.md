@@ -48,7 +48,7 @@ Open in your browser [http://localhost:5000](http://localhost:5000)
     - teravoz: POST [/simulation/stop](https://github.com/felipeblassioli/teravoz-challenge/blob/master/apps/teravoz-api-fake/src/routes/simulation.js#L24)
     - teravoz: GET [/simulation/status](https://github.com/felipeblassioli/teravoz-challenge/blob/master/apps/teravoz-api-fake/src/routes/simulation.js#L29)
 4. Read the [Notable Packages](https://github.com/felipeblassioli/teravoz-challenge/blob/master/docs/notable-packages.md) section.
-5. Read apps/api [README](https://github.com/felipeblassioli/teravoz-challenge/blob/master/apps/api/README.md)
+5. Read apps/api [README](https://github.com/felipeblassioli/teravoz-challenge/blob/master/apps/api/README.md) in particular [Services Model](https://github.com/felipeblassioli/teravoz-challenge/tree/master/apps/api#services-model)
 
 #### Development Requirements
 
