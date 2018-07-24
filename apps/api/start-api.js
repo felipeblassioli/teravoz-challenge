@@ -4,7 +4,7 @@ const buildFastifyApp = require('./src/build-fastify-app');
 
 const start = async () => {
   const host = process.env.HOST || '0.0.0.0';
-  const port = process.env.PORT || 3000;
+  const port = process.env.PORT || 3002;
 
   const teravozServiceUrl = process.env.TERAVOZ_SERVICE_URL;
   const savedStatePath = process.env.SAVED_STATE_FILEPATH;
