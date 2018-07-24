@@ -1,7 +1,7 @@
 
 ## API application
 
-Running locally, no surprises here, this is a standard node application.
+This is a standard node application, to run it locally:
 
 ```bash
 $ npm install
@@ -11,17 +11,22 @@ $ npm start
 
 | Environment variable  | Description   | Example |
 | --------------------- | ------------- | -------- | 
+| PORT                  | The HTTP port the will listen | 3002 |
 | TERAVOZ_SERVICE_URL   | The urls expected to responde for POST /actions  | http://localhost:3001 |
 | SAVED_STATE_FILEPATH  | The path that the application's state is going to be saved. | /tmp/save-state.json |
 
+If everything is correct, then after `npm start` the application is ready to accept [teravoz events](https://developers.teravoz.com.br/#lista-eventos) via POST /webhook
+
+To do a simulation start the [teravoz-fake-api](https://github.com/felipeblassioli/teravoz-challenge/tree/master/apps/teravoz-api-fake) application and set `TERAVOZ_SERVICE_URL` variable or use [docker-compose to run everything together](https://github.com/felipeblassioli/teravoz-challenge#running). I recommend the later.
+
 ### Architecture Decisions
 
-  - Environment variables in a single place only: The [entrypoint](https://github.com/felipeblassioli/teravoz-challenge/blob/master/apps/api/start-api.js)
+  - Environment variables in a single place only: The application [entrypoint](https://github.com/felipeblassioli/teravoz-challenge/blob/master/apps/api/start-api.js).
   - Avoid generic variable names. Prefer descreptive names, instead of short ones.
 
 **Mixed case file names**
 
-  - Classes (which you instantiate using new) are camelCased.
+  - Classes (which you instantiate using `new`) are camelCased.
   - Everything else is underscore cased. Prefer verbs/actions and imperative names.
 
 #### Services Model
