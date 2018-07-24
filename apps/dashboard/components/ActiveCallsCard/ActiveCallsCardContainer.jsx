@@ -1,4 +1,4 @@
-import ActiveCallsList from './ActiveCallsList';
+import ActiveCallsCard from './ActiveCallsCard';
 import ApiServiceContext from '../../contexts/ApiServiceContext';
 import consumeContext from '../../hocs/consumeContext';
 import { compose, withState, lifecycle } from 'recompose';
@@ -25,4 +25,4 @@ const enhance = compose(
   pollActiveCallsForever(1000)
 );
 
-export default enhance(ActiveCallsList);
+export default enhance(ActiveCallsCard);
