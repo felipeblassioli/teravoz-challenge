@@ -1,4 +1,5 @@
 const Fastify = require('fastify');
+const cors = require('cors');
 const buildServicesDAG = require('./build-services-dag');
 
 async function buildFastifyApp(opts = {}) {
@@ -6,6 +7,11 @@ async function buildFastifyApp(opts = {}) {
     logger: true,
     ...opts,
   });
+  fastify.use(
+    cors({
+      origin: '*',
+    })
+  );
 
   const { teravozEventHandlerService } = await buildServicesDAG(opts);
 

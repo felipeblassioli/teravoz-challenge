@@ -1,4 +1,5 @@
 const Fastify = require('fastify');
+const cors = require('cors');
 const CallSimulatorService = require('./services/CallSimulatorService');
 const WebhookService = require('./services/WebhookService');
 
@@ -9,6 +10,11 @@ function buildFastifyApp(options = {}) {
     logger: true,
     ...options,
   });
+  fastify.use(
+    cors({
+      origin: '*',
+    })
+  );
 
   const webhookService = new WebhookService({ webhookUrl });
   const callSimulatorService = new CallSimulatorService({
