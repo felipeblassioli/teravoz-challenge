@@ -3,7 +3,7 @@ const CallSimulatorService = require('./services/CallSimulatorService');
 const WebhookService = require('./services/WebhookService');
 
 function buildFastifyApp(options = {}) {
-  const { webhookUrl } = options;
+  const { webhookUrl, simulationNewCallsDelay, simulationAutoStart } = options;
 
   const fastify = Fastify({
     logger: true,
@@ -24,9 +24,12 @@ function buildFastifyApp(options = {}) {
   fastify.ready(err => {
     if (err) throw err;
 
-    setInterval(() => {
-      callSimulatorService.simulateFirstHalf();
-    }, 7000);
+    if (simulationAutoStart) {
+      callSimulatorService.start({
+        simulationNewCallsDelay,
+      });
+      fastify.log.info('Simulation started!');
+    }
   });
 
   return fastify;

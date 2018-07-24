@@ -13,9 +13,21 @@ const start = async () => {
     );
     process.exit(1);
   }
+
+  const simulationAutoStart = process.env.SIMULATION_AUTO_START;
+  const simulationNewCallsDelay =
+    process.env.SIMULATION_NEW_CALLS_DELAY || 7000;
   const fastify = buildFastifyApp({
     webhookUrl,
+    simulationNewCallsDelay,
+    simulationAutoStart,
   });
+  if (simulationAutoStart) {
+    fastify.log.info('Simulation will start automatically.');
+    fastify.log.info(
+      `Simulation new call interval is ${simulationNewCallsDelay}ms`
+    );
+  }
 
   try {
     await fastify.listen(port, host);

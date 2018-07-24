@@ -16,6 +16,10 @@ class CallSimulatorService {
     this.state = {
       call: {},
     };
+    this.simulation = {
+      running: false,
+      intervalId: null,
+    };
   }
 
   async dispatch(event) {
@@ -29,12 +33,13 @@ class CallSimulatorService {
   /**
    * Dispatches events: call.new, call.standby
    */
-  async simulateFirstHalf() {
+  async simulateFirstHalf(overrides = {}) {
     const callContext = {
       callId: faker.random.uuid(),
       code: faker.address.zipCode(),
       ourNumber: faker.phone.phoneNumber(),
       theirNumber: faker.phone.phoneNumber(),
+      ...overrides,
     };
 
     this.state.call[callContext.callId] = callContext;
@@ -42,6 +47,22 @@ class CallSimulatorService {
     await this.dispatch(callNew(callContext));
     await sleep(400);
     await this.dispatch(callStandby(callContext));
+  }
+
+  start({ newCallsDelay = 7000 }) {
+    if (!this.simulation.running) {
+      this.simulation.intervalId = setInterval(() => {
+        this.simulateFirstHalf();
+      }, newCallsDelay);
+      this.simulation.running = true;
+    }
+  }
+
+  stop() {
+    if (this.simulation.intervalId) {
+      clearInterval(this.simulation.intervalId);
+      this.simulation.running = false;
+    }
   }
 
   /**
@@ -61,7 +82,7 @@ class CallSimulatorService {
     await this.dispatch(actorEntered(callContext));
     await sleep(400);
     await this.dispatch(callOngoing(callContext));
-    await sleep(2000);
+    await sleep(callContext.targetDuration || 5000);
     await this.dispatch(actorLeft(callContext));
     await sleep(500);
     await this.dispatch(callFinished(callContext));
