@@ -14,6 +14,7 @@ This repository contains 3 different applications:
 Each application is a docker container and meant to be deployed separatedly. For instance using [now](https://zeit.co/now).
 
 This is a monorepo made using [lerna](https://github.com/lerna/lerna) to manage multiple packages.
+Also I'm not using yarn because of some lerna [issues](https://github.com/lerna/lerna/issues/1349).
 
 Even though there's no shared packages for this trivial application, the monorepo structure is convenient to use a single linting and formatting set of rules.
 
