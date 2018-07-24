@@ -13,7 +13,10 @@ function IndexPageComponent(props) {
   return (
     <Container>
       <div style={{ marginBottom: '16px' }}>
-        Random simulation: <RandomSimulationToggle />
+        Random simulation:{' '}
+        <RandomSimulationToggle
+          initialSimulationStatus={props.initialSimulationStatus}
+        />
       </div>
       <Grid centered columns={1}>
         <Grid.Column>
