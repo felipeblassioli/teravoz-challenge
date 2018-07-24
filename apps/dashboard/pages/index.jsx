@@ -1,12 +1,15 @@
 import 'semantic-ui-css/semantic.min.css';
+import { compose } from 'recompose';
 import { Container, Grid } from 'semantic-ui-react';
-
+import provideContext from '../hocs/provideContext';
+import TeravozServiceContext from '../contexts/TeravozServiceContext';
+import ApiServiceContext from '../contexts/ApiServiceContext';
 import ActiveCallsCard from '../components/ActiveCallsCard';
 import MakeCallCard from '../components/MakeCallCard';
 import EventFeed from '../components/EventFeed';
 import RandomSimulationToggle from '../components/RandomSimulationToggle';
 
-function IndexPage() {
+function IndexPageComponent(props) {
   return (
     <Container>
       <div style={{ marginBottom: '16px' }}>
@@ -19,7 +22,7 @@ function IndexPage() {
 
         <Grid.Row centered columns={2}>
           <Grid.Column>
-            <ActiveCallsCard />
+            <ActiveCallsCard initialActiveCalls={props.initialActiveCalls} />
           </Grid.Column>
           <Grid.Column>
             <EventFeed />
@@ -29,5 +32,16 @@ function IndexPage() {
     </Container>
   );
 }
+
+const IndexPage = compose(
+  provideContext(TeravozServiceContext),
+  provideContext(ApiServiceContext)
+)(IndexPageComponent);
+
+IndexPage.getInitialProps = async ({ req }) => {
+  return {
+    initialActiveCalls: await ApiServiceContext.defaultValue.getActiveCalls(),
+  };
+};
 
 export default IndexPage;
