@@ -5,12 +5,13 @@ async function simulationRoute(fastify, options = {}) {
 
   fastify.post('/simulation/call/new', async (request, reply) => {
     let callContextOverrides = camelize(request.body);
+    callContextOverrides.theirNumber = callContextOverrides.phoneNumber;
     if (callContextOverrides.targetDuration) {
       callContextOverrides.targetDuration =
         callContextOverrides.targetDuration * 1000;
     }
     await callSimulatorService.simulateFirstHalf(callContextOverrides);
-    reply.send();
+    reply.send({ data: 'ok' });
   });
 
   fastify.post('/simulation/start', (request, reply) => {
