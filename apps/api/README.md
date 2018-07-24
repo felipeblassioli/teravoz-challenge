@@ -19,6 +19,38 @@ If everything is correct, then after `npm start` the application is ready to acc
 
 To do a simulation start the [teravoz-fake-api](https://github.com/felipeblassioli/teravoz-challenge/tree/master/apps/teravoz-api-fake) application and set `TERAVOZ_SERVICE_URL` variable or use [docker-compose to run everything together](https://github.com/felipeblassioli/teravoz-challenge#running). I recommend the later.
 
+### How it works
+
+All [teravoz events](https://developers.teravoz.com.br/#lista-eventos) are received via POST /webhook and eventually handle by [TeravozEventHandlerService](https://github.com/felipeblassioli/teravoz-challenge/tree/master/apps/api/src/services/TeravozEventHandlerService).
+This Service uses [redux + redux logic](https://github.com/felipeblassioli/teravoz-challenge/blob/master/docs/notable-packages.md#redux--redux-logic) to state and control state changes in a deterministic way.
+
+The application state has the following shape:
+
+```json
+{
+	"returningCustomers": {},
+	"ongoingCalls": {
+		"212ac5b5-b8d2-4fc4-ae00-ef76bce6f90e": {
+			"teravozType": "call.ongoing",
+			"callId": "212ac5b5-b8d2-4fc4-ae00-ef76bce6f90e",
+			"code": "35556-2328",
+			"direction": "inbound",
+			"ourNumber": "(329) 001-9775 x45159",
+			"theirNumber": "+551199999999",
+			"timestamp": "2018-07-24T13:00:47.349Z"
+		}
+	}
+}
+```
+
+With this data structure it's really easy to delegate calls:
+
+  1. When receives `call.ongoing` event we add to `state.ongoingCalls`. This is done [here](https://github.com/felipeblassioli/teravoz-challenge/blob/851f1995e085f4bf2d7e27d6ec24f2cd901ade05/apps/api/src/services/TeravozEventHandlerService/reducer.js#L28) and tested [here](https://github.com/felipeblassioli/teravoz-challenge/blob/851f1995e085f4bf2d7e27d6ec24f2cd901ade05/apps/api/src/services/TeravozEventHandlerService/reducer.test.js#L93)
+  2. When receives `call.finished` event we add the phone number to `state.returningCustomers`. This is done [here](https://github.com/felipeblassioli/teravoz-challenge/blob/851f1995e085f4bf2d7e27d6ec24f2cd901ade05/apps/api/src/services/TeravozEventHandlerService/reducer.js#L16) and tested [here](https://github.com/felipeblassioli/teravoz-challenge/blob/851f1995e085f4bf2d7e27d6ec24f2cd901ade05/apps/api/src/services/TeravozEventHandlerService/reducer.test.js#L104)
+  3. When receives `call.standby` event we delegate calls to 900 or 901. This is done [here](https://github.com/felipeblassioli/teravoz-challenge/blob/851f1995e085f4bf2d7e27d6ec24f2cd901ade05/apps/api/src/services/TeravozEventHandlerService/logic/call-delegation-logic.js#L10) and tested [here](https://github.com/felipeblassioli/teravoz-challenge/blob/851f1995e085f4bf2d7e27d6ec24f2cd901ade05/apps/api/src/services/TeravozEventHandlerService/logic/call-delegation-logic.test.js#L58)
+
+The state is persistent and store as a json file. This is done [here](https://github.com/felipeblassioli/teravoz-challenge/blob/851f1995e085f4bf2d7e27d6ec24f2cd901ade05/apps/api/src/services/TeravozEventHandlerService/TeravozEventHandlerService.js#L31).
+
 ### Architecture Decisions
 
   - Environment variables in a single place only: The application [entrypoint](https://github.com/felipeblassioli/teravoz-challenge/blob/master/apps/api/start-api.js).
