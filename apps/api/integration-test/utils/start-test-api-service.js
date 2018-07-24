@@ -18,6 +18,8 @@ const start = async ({
     fastify.log.error(err);
     process.exit(1);
   }
+
+  return fastify;
 };
 
 module.exports = start;

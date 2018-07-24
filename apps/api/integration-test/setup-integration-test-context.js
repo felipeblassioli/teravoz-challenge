@@ -19,12 +19,17 @@ module.exports = {
     const apiPort = faker.random.number({ min: 1001, max: 65535 });
     const teravozPort = faker.random.number({ min: 1001, max: 65535 });
 
-    await startTestApiService({
+    const apiServiceConfig = {
       port: apiPort,
       host: 'localhost',
       teravozServiceUrl: `http://localhost:${teravozPort}`,
-      savedStatePath: `${STATE_DIRECTORY}/${faker.random.uuid()}`,
-    });
+      savedStatePath: `${STATE_DIRECTORY}/${faker.random
+        .uuid()
+        .replace(/-/g, '')}.json`,
+    };
+
+    let apiService = await startTestApiService(apiServiceConfig);
+
     const teravozService = await startTestTeravozService({
       port: teravozPort,
       host: 'localhost',
@@ -44,6 +49,11 @@ module.exports = {
       ourNumber: faker.phone.phoneNumber(),
       theirNumber: faker.phone.phoneNumber(),
     });
+
+    t.context.restartServer = async () => {
+      await apiService.close();
+      apiService = await startTestApiService(apiServiceConfig);
+    };
 
     t.context.assertions = {};
 
