@@ -43,8 +43,11 @@ function reducer(state = EMPTY_STATE, action) {
   return ongoingCallsReducer(state, action);
 }
 
+const getOngoingCalls = state => state.get('ongoingCalls');
+
 module.exports = {
   EMPTY_STATE,
   getReturningCustomers,
+  getOngoingCalls,
   reducer,
 };

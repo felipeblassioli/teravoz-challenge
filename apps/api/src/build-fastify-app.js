@@ -10,6 +10,7 @@ async function buildFastifyApp(opts = {}) {
   const { teravozEventHandlerService } = await buildServicesDAG(opts);
 
   fastify.register(require('./routes/webhook'), { teravozEventHandlerService });
+  fastify.register(require('./routes/calls'), { teravozEventHandlerService });
 
   return fastify;
 }
