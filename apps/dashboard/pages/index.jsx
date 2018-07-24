@@ -41,6 +41,7 @@ const IndexPage = compose(
 IndexPage.getInitialProps = async ({ req }) => {
   return {
     initialActiveCalls: await ApiServiceContext.defaultValue.getActiveCalls(),
+    initialSimulationStatus: await TeravozServiceContext.defaultValue.getSimulationStatus(),
   };
 };
 
