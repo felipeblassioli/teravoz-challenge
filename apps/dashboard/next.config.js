@@ -19,25 +19,13 @@ const webpackConfig = {
   },
 };
 
-function ensureValidUrl(variableName, url) {
-  if (!url) {
-    throw new Error(`Missing environment variable ${variableName}`);
-  }
-  // A TypeError will be thrown if the input or base are not valid URLs.
-  // eslint-disable-next-line no-new
-  new URL(url);
-}
-const teravozServiceUrl = process.env.TERAVOZ_SERVICE_URL;
-ensureValidUrl('TERAVOZ_SERVICE_URL', teravozServiceUrl);
-
-const apiServiceUrl = process.env.API_SERVICE_URL;
-ensureValidUrl('API_SERVICE_URL', apiServiceUrl);
-
 const config = {
   ...webpackConfig,
-  publicRuntimeConfig: {
-    teravozServiceUrl,
-    apiServiceUrl,
+  serverRuntimeConfig: {
+    host: process.env.HOST || 'localhost',
+    port: parseInt(process.env.PORT, 10) || 3000,
+    teravozServiceUrl: process.env.TERAVOZ_SERVICE_URL,
+    apiServiceUrl: process.env.API_SERVICE_URL,
   },
 };
 
