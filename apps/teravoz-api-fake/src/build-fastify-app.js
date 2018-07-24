@@ -21,6 +21,10 @@ function buildFastifyApp(options = {}) {
     callSimulatorService,
   });
 
+  fastify.register(require('./routes/simulation'), {
+    callSimulatorService,
+  });
+
   fastify.ready(err => {
     if (err) throw err;
 
