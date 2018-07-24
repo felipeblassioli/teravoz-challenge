@@ -23,6 +23,7 @@ Even though there's no shared packages for this trivial application, the monorep
 Please docker [docker](https://docs.docker.com/install/) and [docker-compose](https://docs.docker.com/compose/install/);
 
 ```bash
+$ docker-compose build
 $ docker-compose up
 ```
 
